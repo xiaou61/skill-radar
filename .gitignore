@@ -4,3 +4,5 @@ final-check/
 smoke-cli/
 verify-md/
 zh-check/
+release/
+build-release.log

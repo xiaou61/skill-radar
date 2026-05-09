@@ -1,16 +1,62 @@
 {
-  "name": "local-skills-summary",
+  "name": "skill-radar",
   "version": "1.0.0",
   "private": true,
-  "description": "Scan local Codex and Claude Code skills, then generate categorized summary reports.",
+  "description": "A local Electron desktop dashboard that scans and organizes Codex and Claude Code skills.",
   "main": "electron/main.js",
+  "author": "xiaou61",
   "scripts": {
     "scan": "node src/index.js",
     "scan:md": "node src/index.js --format md",
     "scan:json": "node src/index.js --format json",
-    "start": "powershell -NoProfile -ExecutionPolicy Bypass -Command \"Remove-Item Env:ELECTRON_RUN_AS_NODE -ErrorAction SilentlyContinue; & .\\node_modules\\electron\\dist\\electron.exe .\""
+    "start": "powershell -NoProfile -ExecutionPolicy Bypass -Command \"Remove-Item Env:ELECTRON_RUN_AS_NODE -ErrorAction SilentlyContinue; & .\\node_modules\\electron\\dist\\electron.exe .\"",
+    "dist": "powershell -NoProfile -ExecutionPolicy Bypass -Command \"$proxy=(Get-ItemProperty 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings' -ErrorAction SilentlyContinue).ProxyServer; Remove-Item Env:ELECTRON_RUN_AS_NODE -ErrorAction SilentlyContinue; if ($proxy) { $env:HTTP_PROXY='http://'+$proxy; $env:HTTPS_PROXY='http://'+$proxy }; npx electron-builder --win nsis portable\"",
+    "release": "powershell -NoProfile -ExecutionPolicy Bypass -Command \"$proxy=(Get-ItemProperty 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings' -ErrorAction SilentlyContinue).ProxyServer; Remove-Item Env:ELECTRON_RUN_AS_NODE -ErrorAction SilentlyContinue; if ($proxy) { $env:HTTP_PROXY='http://'+$proxy; $env:HTTPS_PROXY='http://'+$proxy }; npx electron-builder --win nsis portable --publish always\""
+  },
+  "build": {
+    "appId": "com.xiaou61.skillradar",
+    "productName": "Skill Radar",
+    "artifactName": "${productName}-${version}-${arch}.${ext}",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "electron/**/*",
+      "renderer/**/*",
+      "src/**/*",
+      "package.json",
+      "package-lock.json"
+    ],
+    "extraMetadata": {
+      "main": "electron/main.js"
+    },
+    "asar": true,
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": false,
+      "artifactName": "${productName}-Setup-${version}-${arch}.${ext}"
+    },
+    "portable": {
+      "artifactName": "${productName}-Portable-${version}-${arch}.${ext}"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "xiaou61",
+        "repo": "skill-radar",
+        "releaseType": "release"
+      }
+    ]
   },
   "devDependencies": {
-    "electron": "^37.0.0"
+    "electron": "^37.0.0",
+    "electron-builder": "^24.13.3"
   }
 }

@@ -47,6 +47,33 @@ npm run start
 
 启动后会直接打开本地窗口，点击“重新扫描”即可刷新当前机器上的 skills 数据。
 
+## 打包与 Release
+
+本项目支持打包 Windows 安装包和便携版：
+
+```bash
+npm run dist
+```
+
+构建产物会输出到：
+
+- `release/Skill Radar-Setup-<version>-x64.exe`
+- `release/Skill Radar-Portable-<version>-x64.exe`
+
+如果你把代码推到 GitHub，并创建形如 `v1.0.0` 的 tag：
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+GitHub Actions 会自动：
+
+- 安装依赖
+- 构建 Windows 包
+- 创建或更新 GitHub Release
+- 上传安装包和便携版产物
+
 ## 命令行模式
 
 如果你还想保留命令行输出报告，也可以继续使用：
