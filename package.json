@@ -1,0 +1,16 @@
+{
+  "name": "local-skills-summary",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Scan local Codex and Claude Code skills, then generate categorized summary reports.",
+  "main": "electron/main.js",
+  "scripts": {
+    "scan": "node src/index.js",
+    "scan:md": "node src/index.js --format md",
+    "scan:json": "node src/index.js --format json",
+    "start": "powershell -NoProfile -ExecutionPolicy Bypass -Command \"Remove-Item Env:ELECTRON_RUN_AS_NODE -ErrorAction SilentlyContinue; & .\\node_modules\\electron\\dist\\electron.exe .\""
+  },
+  "devDependencies": {
+    "electron": "^37.0.0"
+  }
+}

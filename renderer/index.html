@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Skills 汇总看板</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Local Skills Dashboard</p>
+          <h1>Skills 汇总看板</h1>
+          <p class="subtitle">
+            纯本地扫描 Codex / Claude Code / Agents skills，自动分类归属，并优先用中文展示关键信息。
+          </p>
+        </div>
+        <div class="toolbar">
+          <label class="toggle">
+            <input id="useTranslation" type="checkbox" checked />
+            <span>显示中文翻译</span>
+          </label>
+          <label class="toggle">
+            <input id="includeAgents" type="checkbox" checked />
+            <span>包含 Agents / 旧版技能库</span>
+          </label>
+          <button id="scanButton" class="scan-button">重新扫描</button>
+        </div>
+      </header>
+
+      <main class="dashboard">
+        <section class="hero-grid">
+          <article class="hero-card emphasis">
+            <div class="card-header">
+              <span>全局总览</span>
+              <span id="scanStatus" class="status-pill idle">待扫描</span>
+            </div>
+            <div class="metrics-row">
+              <div>
+                <p class="metric-label">技能总数</p>
+                <p id="totalSkills" class="metric-value">--</p>
+              </div>
+              <div>
+                <p class="metric-label">技能源</p>
+                <p id="totalSources" class="metric-value">--</p>
+              </div>
+              <div>
+                <p class="metric-label">系统技能</p>
+                <p id="systemSkills" class="metric-value">--</p>
+              </div>
+            </div>
+            <div class="source-strip" id="sourceStrip"></div>
+          </article>
+
+          <article class="hero-card">
+            <div class="card-header">
+              <span>Codex / Claude 差异</span>
+              <span class="micro-label">来源对比</span>
+            </div>
+            <div class="compare-stats">
+              <div class="compare-block shared">
+                <p>共有</p>
+                <strong id="sharedCount">--</strong>
+              </div>
+              <div class="compare-block codex">
+                <p>仅 Codex</p>
+                <strong id="codexOnlyCount">--</strong>
+              </div>
+              <div class="compare-block claude">
+                <p>仅 Claude</p>
+                <strong id="claudeOnlyCount">--</strong>
+              </div>
+            </div>
+            <div class="compare-list-wrap">
+              <h3>仅 Codex 技能</h3>
+              <div id="codexOnlyList" class="token-list"></div>
+            </div>
+          </article>
+        </section>
+
+        <section class="panel-grid">
+          <article class="panel">
+            <div class="card-header">
+              <span>分类分布</span>
+              <span class="micro-label">自动归属</span>
+            </div>
+            <div id="categoryChart" class="category-chart"></div>
+          </article>
+
+          <article class="panel">
+            <div class="card-header">
+              <span>技能源雷达</span>
+              <span class="micro-label">目录状态</span>
+            </div>
+            <div id="sourceCards" class="source-cards"></div>
+          </article>
+        </section>
+
+        <section class="details-layout">
+          <article class="panel detail-panel">
+            <div class="card-header">
+              <span>技能清单</span>
+              <span id="resultCount" class="micro-label">0 条</span>
+            </div>
+            <div class="filters">
+              <input id="searchInput" class="search-input" type="text" placeholder="搜索 skill 名称、描述、来源..." />
+              <select id="sourceFilter" class="filter-select">
+                <option value="all">全部来源</option>
+              </select>
+              <select id="categoryFilter" class="filter-select">
+                <option value="all">全部分类</option>
+              </select>
+            </div>
+            <div id="skillsTable" class="skills-table"></div>
+          </article>
+
+          <article class="panel sidebar-panel">
+            <div class="card-header">
+              <span>技能详情</span>
+              <span class="micro-label">选中查看</span>
+            </div>
+            <div id="skillDetail" class="skill-detail empty">
+              <p>选择左侧任意 skill，可在这里查看来源、路径、标签和说明。</p>
+            </div>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+  </html>

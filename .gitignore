@@ -1,0 +1,6 @@
+reports/
+node_modules/
+final-check/
+smoke-cli/
+verify-md/
+zh-check/
